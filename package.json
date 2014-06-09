@@ -1,6 +1,6 @@
 {
   "name": "glsl-transition-validator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "GLSL Validator for glsl-transition",
   "author": "Gaëtan Renaudeau <renaudeau.gaetan@gmail.com>",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "keywords": ["glsl", "validator", "glsl-transition"],
   "dependencies": {
-    "glsl-transition": "0.4.x"
+    "glsl-transition": "0.5.x"
   },
   "license": "MIT"
 }
