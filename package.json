@@ -6,7 +6,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gre/glsl-transition-validator"
+    "url": "https://github.com/glslio/glsl-transition-validator"
   },
   "keywords": ["glsl", "validator", "glsl-transition"],
   "dependencies": {
