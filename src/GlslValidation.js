@@ -34,7 +34,7 @@ var LazyPrototype = {
     this._transition = null;
     var details, error, i, lineStr, line, lines, log, message, status, _i, _len;
     if (!source) {
-      return { compiles: false };
+      return { compiles: false, message: "source code is "+source };
     }
     try {
       var context = this.validator.Transition.getGL();
@@ -110,16 +110,19 @@ function GlslTransitionValidation (validator, glsl, uniforms) {
 GlslTransitionValidation.prototype = {
   
   satisfyUniforms: function (userUniforms) {
+    if (!this.uniforms()) return false;
     return this.validateUniforms(userUniforms).length === 0;
   },
 
   isValidFrom: function (userUniforms) {
+    if (!this.compiles()) return false;
     var expected = this.fromImagePixels();
     var result = this.pixelsFor(0, userUniforms);
     return this.samePixels(expected, result);
   },
 
   isValidTo: function (userUniforms) {
+    if (!this.compiles()) return false;
     var expected = this.toImagePixels();
     var result = this.pixelsFor(1, userUniforms);
     return this.samePixels(expected, result);
@@ -132,6 +135,12 @@ GlslTransitionValidation.prototype = {
 
   validateUniforms: function (userUniforms) {
     var uniformTypes = this.uniforms();
+    if (uniformTypes === null) {
+      return [{
+        message: "no uniforms are available. Have the GLSL compiled?",
+        reasonId: "UniformsNotAvailable"
+      }];
+    }
     var reasons = [];
     for (var key in userUniforms) {
       if (ignoredUniforms.indexOf(key) !== -1) {
