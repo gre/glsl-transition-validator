@@ -128,9 +128,19 @@ GlslTransitionValidation.prototype = {
     return this.samePixels(expected, result);
   },
 
-  samePixels: function (a, b, tolerance) {
+  samePixels: function (a, b) {
+    return this.comparePixels(a, b).similar;
+  },
+
+  comparePixels: function (a, b) {
+    var tolerance = this.validator.tolerance * 255 * Math.sqrt(3 * this.validator.width * this.validator.height);
     var dist = ndarrayDistance(a, b);
-    return dist <= (tolerance||0);
+    return {
+      strictlyEquals: dist === 0,
+      similar: dist <= tolerance,
+      dist: dist,
+      tolerance: tolerance
+    };
   },
 
   validateUniforms: function (userUniforms) {
