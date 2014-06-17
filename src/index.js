@@ -15,7 +15,6 @@ var domCreateCanvas = function () {
 
 function GlslTransitionValidator (fromImage, toImage, width, height, tolerance) {
   if (arguments.length < 2) throw new Error("you must provide at least fromImage and toImage to the Validator.");
-  if (typeof window !== "undefined" && typeof createCanvas !== "function") throw new Error("You must provide 'createCanvas' as a way to create a Canvas element.");
   this.fromImage = fromImage;
   this.toImage = toImage;
   this.tolerance = typeof tolerance === "undefined" ? 0.02 : tolerance;
