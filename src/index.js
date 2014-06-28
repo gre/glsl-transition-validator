@@ -25,6 +25,7 @@ function GlslTransitionValidator (fromImage, toImage, width, height, tolerance) 
   this.canvas.width = this.width;
   this.canvas.height = this.height;
   this.Transition = GlslTransitionCore(this.canvas);
+  this.validations = [];
 }
 
 GlslTransitionValidator.createCanvas = function () {
@@ -34,11 +35,22 @@ GlslTransitionValidator.createCanvas = function () {
 
 GlslTransitionValidator.prototype = {
   forGlsl: function (glsl) {
-    return new GlslValidation(this, glsl);
+    return this.addValidation(new GlslValidation(this, glsl));
+  },
+  addValidation: function (v) {
+    this.validations.push(v);
+    return v;
   },
   destroy: function () {
-    if (validator.identityTransition) validator.identityTransition.destroy();
+    if (this.identityTransition) this.identityTransition.destroy();
     // TODO destroy all sub-transitions
+    for (var i=0; i<this.validations.length; ++i) {
+      var v = this.validations[i];
+      if (v.destroy) {
+        v.destroy();
+      }
+    }
+    this.validations = null;
   }
 };
 

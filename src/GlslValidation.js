@@ -118,18 +118,16 @@ GlslTransitionValidation.prototype = {
     if (!this.compiles()) return false;
     var expected = this.fromImagePixels();
     var result = this.pixelsFor(0, userUniforms);
-    return this.samePixels(expected, result);
+    var compare = this.comparePixels(expected, result)
+    return compare.similar;
   },
 
   isValidTo: function (userUniforms) {
     if (!this.compiles()) return false;
     var expected = this.toImagePixels();
     var result = this.pixelsFor(1, userUniforms);
-    return this.samePixels(expected, result);
-  },
-
-  samePixels: function (a, b) {
-    return this.comparePixels(a, b).similar;
+    var compare = this.comparePixels(expected, result)
+    return compare.similar;
   },
 
   comparePixels: function (a, b) {
@@ -192,7 +190,7 @@ GlslTransitionValidation.prototype = {
   destroy: function () {
     if (this._transition) this._transition.destroy();
     for (var key in this) {
-      this[key] = null;
+      delete this[key];
     }
   },
 
