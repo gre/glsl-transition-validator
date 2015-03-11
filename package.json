@@ -10,9 +10,7 @@
   },
   "keywords": ["glsl", "validator", "glsl-transition"],
   "dependencies": {
-    "glsl-transition-core": "0.1.x",
-    "ndarray": "1.0.15",
-    "ndarray-distance": "0.0.0"
+    "glsl-transition-core": "0.1.x"
   },
   "license": "MIT"
 }

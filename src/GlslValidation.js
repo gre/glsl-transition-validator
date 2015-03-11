@@ -6,7 +6,6 @@ var lazy = require("./lazy");
 var validateUniform = require("./ValidateUniform");
 var readPixels = require("./readPixels");
 var readPixelsIdentity = require("./readPixelsIdentity");
-var ndarrayDistance = require("ndarray-distance");
 
 var ignoredUniforms = ["progress", "resolution", "from", "to"];
 
@@ -118,7 +117,7 @@ GlslTransitionValidation.prototype = {
     if (!this.compiles()) return false;
     var expected = this.fromImagePixels();
     var result = this.pixelsFor(0, userUniforms);
-    var compare = this.comparePixels(expected, result)
+    var compare = this.comparePixels(expected, result);
     return compare.similar;
   },
 
@@ -126,13 +125,16 @@ GlslTransitionValidation.prototype = {
     if (!this.compiles()) return false;
     var expected = this.toImagePixels();
     var result = this.pixelsFor(1, userUniforms);
-    var compare = this.comparePixels(expected, result)
+    var compare = this.comparePixels(expected, result);
     return compare.similar;
   },
 
   comparePixels: function (a, b) {
     var tolerance = this.validator.tolerance * 255 * Math.sqrt(3 * this.validator.width * this.validator.height);
-    var dist = ndarrayDistance(a, b);
+    var dist = 0;
+    for (var i=0; i<a.length; ++i) {
+      dist += Math.abs(a[i]-b[i]);
+    }
     return {
       strictlyEquals: dist === 0,
       similar: dist <= tolerance,
