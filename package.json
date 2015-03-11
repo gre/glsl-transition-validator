@@ -1,6 +1,6 @@
 {
   "name": "glsl-transition-validator",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "GLSL Validator for glsl-transition",
   "author": "Gaëtan Renaudeau <renaudeau.gaetan@gmail.com>",
   "main": "src/index.js",
@@ -8,7 +8,11 @@
     "type": "git",
     "url": "https://github.com/glslio/glsl-transition-validator"
   },
-  "keywords": ["glsl", "validator", "glsl-transition"],
+  "keywords": [
+    "glsl",
+    "validator",
+    "glsl-transition"
+  ],
   "dependencies": {
     "glsl-transition-core": "0.1.x"
   },
